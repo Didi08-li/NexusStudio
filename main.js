@@ -211,6 +211,33 @@ sendAnotherBtn.addEventListener('click', () => {
         block: 'start'
     });
 });
+// ========================================
+// MODE SOMBRE - DARK MODE
+// ========================================
+
+const darkModeToggle = document.getElementById('darkModeToggle');
+
+// Vérifier si l'utilisateur a déjà une préférence
+if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+    const icon = darkModeToggle.querySelector('i');
+    icon.className = 'fas fa-sun';
+}
+
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    const icon = darkModeToggle.querySelector('i');
+    if (document.body.classList.contains('dark-mode')) {
+        icon.className = 'fas fa-sun';
+        localStorage.setItem('darkMode', 'enabled');
+        darkModeToggle.setAttribute('aria-label', 'Désactiver le mode sombre');
+    } else {
+        icon.className = 'fas fa-moon';
+        localStorage.setItem('darkMode', 'disabled');
+        darkModeToggle.setAttribute('aria-label', 'Activer le mode sombre');
+    }
+});
 
 console.log('🌿 Nexus Studio - Bienvenue !');
 console.log('📱 Projet réalisé dans le cadre du Full Stack Project 1 - DecodeLabs 2026');

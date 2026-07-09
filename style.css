@@ -968,3 +968,186 @@ footer {
         padding: 2rem 0.5rem;
     }
 }
+/* ========================================
+   MODE SOMBRE - DARK MODE
+   ======================================== */
+
+/* Bouton de bascule */
+.dark-mode-toggle {
+    background: none;
+    border: 2px solid var(--text-dark);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-dark);
+    margin-right: 1rem;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--mocha-mousse);
+    border-color: var(--mocha-mousse);
+    color: var(--moonlit-grey);
+}
+
+/* Variables du mode sombre */
+body.dark-mode {
+    --bg-cream: #1a1a2e;
+    --bg-white: #16213e;
+    --moonlit-grey: #0f3460;
+    --text-dark: #e8e8e8;
+    --text-light: #b0b0b0;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Adaptations spécifiques pour le mode sombre */
+body.dark-mode {
+    background-color: #0f3460;
+}
+
+body.dark-mode header {
+    background: #16213e;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .logo {
+    color: var(--text-dark);
+}
+
+body.dark-mode .nav-links a {
+    color: var(--text-dark);
+}
+
+body.dark-mode .nav-links a:hover {
+    color: var(--mocha-mousse);
+}
+
+body.dark-mode .services {
+    background: #16213e;
+}
+
+body.dark-mode .service-card {
+    background: #1a1a2e;
+}
+
+body.dark-mode .projets {
+    background: #0f3460;
+}
+
+body.dark-mode .projet-card {
+    background: #16213e;
+}
+
+body.dark-mode .temoignages {
+    background: #16213e;
+}
+
+body.dark-mode .temoignage {
+    background: #1a1a2e;
+}
+
+body.dark-mode .contact {
+    background: #1a1a2e;
+}
+
+body.dark-mode .contact-form {
+    background: #16213e;
+}
+
+body.dark-mode .contact-form input,
+body.dark-mode .contact-form textarea {
+    background: #1a1a2e;
+    border-color: #2d2d4e;
+    color: var(--text-dark);
+}
+
+body.dark-mode .contact-form input:focus,
+body.dark-mode .contact-form textarea:focus {
+    border-color: var(--mocha-mousse);
+    box-shadow: 0 0 0 4px rgba(166, 123, 91, 0.2);
+}
+
+body.dark-mode .contact-form input::placeholder,
+body.dark-mode .contact-form textarea::placeholder {
+    color: #6a6a8a;
+}
+
+body.dark-mode .confirmation-message {
+    background: #16213e;
+}
+
+body.dark-mode .confirmation-message h3 {
+    color: var(--text-dark);
+}
+
+body.dark-mode .confirmation-message p {
+    color: var(--text-light);
+}
+
+body.dark-mode .service-link {
+    color: var(--mocha-mousse);
+}
+
+body.dark-mode .projet-tag {
+    background: #1a1a2e;
+    color: var(--text-dark);
+}
+
+body.dark-mode .badge {
+    color: var(--text-dark);
+}
+
+body.dark-mode .section-header p {
+    color: var(--text-light);
+}
+
+body.dark-mode .footer-bottom {
+    color: #6a6a8a;
+}
+
+body.dark-mode .dark-mode-toggle {
+    border-color: var(--text-dark);
+    color: var(--text-dark);
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background: var(--mocha-mousse);
+    border-color: var(--mocha-mousse);
+    color: var(--moonlit-grey);
+}
+
+/* Mobile - Menu en mode sombre */
+@media (max-width: 767px) {
+    body.dark-mode .nav-links {
+        background: #16213e;
+    }
+
+    body.dark-mode .btn-nav {
+        color: var(--text-dark) !important;
+    }
+
+    body.dark-mode .btn-nav:hover {
+        color: var(--mocha-mousse) !important;
+    }
+
+    body.dark-mode .menu-toggle {
+        color: var(--text-dark);
+    }
+}
+
+/* Icône du bouton change en fonction du mode */
+body.dark-mode .dark-mode-toggle i {
+    content: "\f186"; /* fa-sun */
+}
+
+/* Transition douce pour tout */
+body.dark-mode,
+body.dark-mode * {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
