@@ -5,9 +5,9 @@
 
 | Projet | GitHub | Site en ligne |
 |--------|--------|---------------|
-| **Project 1** | [Project-1](https://github.com/Didi08-li/Project-1) | [lien](https://didi08-li.github.io/Project-1/) |
+| **Project 1** |  [NexusStudio](https://github.com/Didi08-li/NexusStudio) 
 | **Project 2** | [NexusStudio](https://github.com/Didi08-li/NexusStudio) | - |
-| **Project 3** | ⏳ À venir | - |
+| **Project 3** | Terminé | - | 
 | **Project 4** | ⏳ À venir | - |
 
 ---
