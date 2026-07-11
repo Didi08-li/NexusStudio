@@ -77,8 +77,8 @@ nexus-studio/
 
 | Lien | URL |
 |------|-----|
-| **Site en ligne** | [https://didi08-li.github.io/Project-1/](https://didi08-li.github.io/Project-1/) |
-| **Dépôt GitHub** | [https://github.com/didi08-li/Project-1](https://github.com/didi08-li/Project-1) |
+| **Site en ligne** | [https://didi08-li.github.io//NexusStudio](https://github.com/didi08-li/NexusStudio) |
+| **Dépôt GitHub** | [https://github.com/didi08-li/Project-1][def] |
 
 ---
 
@@ -111,3 +111,6 @@ Ce projet a été réalisé dans le cadre d'un stage chez **DecodeLabs**.
 ---
 
 **Projet suivant :** Full Stack Project 2 (à venir) 🚀
+
+
+[def]: https://github.com/didi08-li/Project-1
