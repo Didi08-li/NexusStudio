@@ -110,11 +110,17 @@ document.querySelectorAll('.service-card, .projet-card, .temoignage').forEach(el
 });
 
 // ========================================
-// GESTION DU FORMULAIRE DE CONTACT
+// CONTACT FORM - AVEC API BACKEND
 // ========================================
+
 const contactForm = document.getElementById('contactForm');
 const confirmationMessage = document.getElementById('confirmationMessage');
 const sendAnotherBtn = document.getElementById('sendAnotherBtn');
+
+// ⚠️ IMPORTANT : URL de l'API
+// - En local : http://localhost:3000/api/messages
+// - En ligne (Render/Railway) : https://votre-api.onrender.com/api/messages
+const API_URL = 'http://localhost:3000/api/messages';
 
 const nomInput = document.getElementById('nom');
 const emailInput = document.getElementById('email');
@@ -125,6 +131,9 @@ const nomError = document.getElementById('nomError');
 const emailError = document.getElementById('emailError');
 const messageError = document.getElementById('messageError');
 
+// ========================================
+// VALIDATION DES CHAMPS
+// ========================================
 function validateField(input, errorElement, condition) {
     if (!condition) {
         input.closest('.form-group').classList.add('error');
@@ -137,6 +146,7 @@ function validateField(input, errorElement, condition) {
     }
 }
 
+// Validation en temps réel
 nomInput.addEventListener('blur', () => {
     validateField(nomInput, nomError, nomInput.value.trim().length >= 2);
 });
@@ -150,50 +160,97 @@ messageInput.addEventListener('blur', () => {
     validateField(messageInput, messageError, messageInput.value.trim().length >= 10);
 });
 
-contactForm.addEventListener('submit', (e) => {
+// ========================================
+// ENVOI DU FORMULAIRE VERS L'API
+// ========================================
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     let isValid = true;
 
+    // Validation nom
     const nomValid = validateField(nomInput, nomError, nomInput.value.trim().length >= 2);
     if (!nomValid) isValid = false;
 
+    // Validation email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const emailValid = validateField(emailInput, emailError, emailRegex.test(emailInput.value.trim()));
     if (!emailValid) isValid = false;
 
+    // Validation message
     const messageValid = validateField(messageInput, messageError, messageInput.value.trim().length >= 10);
     if (!messageValid) isValid = false;
 
-    if (isValid) {
-        const formData = {
-            nom: nomInput.value.trim(),
-            email: emailInput.value.trim(),
-            sujet: sujetInput.value.trim() || 'Non spécifié',
-            message: messageInput.value.trim()
-        };
+    if (!isValid) return;
 
-        console.log('📩 Données du formulaire :', formData);
+    // Préparer les données
+    const formData = {
+        nom: nomInput.value.trim(),
+        email: emailInput.value.trim(),
+        message: messageInput.value.trim()
+    };
 
-        contactForm.style.display = 'none';
-        confirmationMessage.style.display = 'block';
+    // Ajouter le sujet s'il est rempli
+    if (sujetInput.value.trim()) {
+        formData.sujet = sujetInput.value.trim();
+    }
 
-        contactForm.reset();
+    try {
+        // Afficher un message de chargement
+        const submitBtn = contactForm.querySelector('.btn-primary');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+        submitBtn.disabled = true;
 
-        document.querySelectorAll('.form-group').forEach(group => {
-            group.classList.remove('error');
+        // Envoyer les données à l'API
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         });
-        document.querySelectorAll('.error-message').forEach(msg => {
-            msg.classList.remove('visible');
-        });
 
-        document.getElementById('contact').scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        const result = await response.json();
+
+        // Restaurer le bouton
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+
+        if (response.ok) {
+            // Succès
+            console.log('✅ Message envoyé :', result);
+            contactForm.style.display = 'none';
+            confirmationMessage.style.display = 'block';
+            contactForm.reset();
+            
+            // Supprimer les classes d'erreur
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.classList.remove('visible');
+            });
+
+            // Faire défiler vers le haut de la section contact
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            // Erreur de l'API
+            alert(`❌ Erreur : ${result.error || 'Une erreur est survenue'}`);
+        }
+    } catch (error) {
+        // Erreur réseau (API hors ligne)
+        console.error('❌ Erreur réseau :', error);
+        alert('⚠️ Impossible de contacter le serveur. Vérifiez que l\'API est en ligne sur ' + API_URL);
     }
 });
 
+// ========================================
+// BOUTON "ENVOYER UN AUTRE MESSAGE"
+// ========================================
 sendAnotherBtn.addEventListener('click', () => {
     confirmationMessage.style.display = 'none';
     contactForm.style.display = 'block';
@@ -212,7 +269,10 @@ sendAnotherBtn.addEventListener('click', () => {
     });
 });
 
-
+// ========================================
+// CONSOLE LOG - BIENVENUE
+// ========================================
 console.log('🌿 Nexus Studio - Bienvenue !');
 console.log('📱 Projet réalisé dans le cadre du Full Stack Project 1 - DecodeLabs 2026');
 console.log('🎨 Couleurs 2025 : Mocha Mousse • Ethereal Blue • Moonlit Grey');
+console.log('🔗 API connectée : ' + API_URL);
