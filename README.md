@@ -8,7 +8,7 @@
 | **Project 1** |  [NexusStudio](https://github.com/Didi08-li/NexusStudio) 
 | **Project 2** | [NexusStudio](https://github.com/Didi08-li/NexusStudio) | - |
 | **Project 3** | Terminé | - | 
-| **Project 4** | ⏳ À venir | - |
+| **Project 4** | Terminé | - |
 
 ---
 

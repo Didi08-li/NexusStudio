@@ -1,5 +1,5 @@
 /* ========================================
-   RESET & BASE - CORRIGÉ
+   RESET & BASE
    ======================================== */
 *,
 *::before,
@@ -7,6 +7,27 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+:root {
+    --mocha-mousse: #A67B5B;
+    --ethereal-blue: #A0D4E0;
+    --moonlit-grey: #F2F0EA;
+    --bg-cream: #F8F5F0;
+    --bg-white: #FFFFFF;
+    --text-dark: #3D2E1E;
+    --text-light: #7A6B5A;
+    --shadow: 0 8px 24px rgba(62, 45, 30, 0.08);
+    --shadow-hover: 0 12px 40px rgba(62, 45, 30, 0.14);
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --section-padding: 4rem 1.5rem;
+    --container-max: 1200px;
+    --radius: 12px;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 html, body {
@@ -18,9 +39,8 @@ html, body {
     line-height: 1.6;
 }
 
-img, video, iframe {
+img {
     max-width: 100%;
-    height: auto;
     display: block;
 }
 
@@ -34,32 +54,12 @@ ul {
 }
 
 /* ========================================
-   COULEURS
-   ======================================== */
-:root {
-    --mocha-mousse: #A67B5B;
-    --ethereal-blue: #A0D4E0;
-    --moonlit-grey: #F2F0EA;
-    
-    --bg-cream: #F8F5F0;
-    --bg-white: #FFFFFF;
-    --text-dark: #3D2E1E;
-    --text-light: #7A6B5A;
-    --shadow: 0 8px 24px rgba(62, 45, 30, 0.08);
-    --shadow-hover: 0 12px 40px rgba(62, 45, 30, 0.14);
-    
-    --font-heading: 'Inter', sans-serif;
-    --font-body: 'Roboto', sans-serif;
-    
-    --section-padding: 4rem 1.5rem;
-    --container-max: 1200px;
-    --radius: 12px;
-}
-
-/* ========================================
    TYPOGRAPHIE
    ======================================== */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: var(--font-heading);
     font-weight: 700;
     line-height: 1.2;
@@ -153,7 +153,7 @@ p {
 }
 
 /* ========================================
-   HEADER / NAVIGATION
+   HEADER
    ======================================== */
 header {
     background: var(--moonlit-grey);
@@ -766,7 +766,6 @@ footer {
    RESPONSIVE - MOBILE (< 768px)
    ======================================== */
 @media (max-width: 767px) {
-    /* Menu burger */
     .menu-toggle {
         display: block;
     }
@@ -801,7 +800,6 @@ footer {
         color: var(--mocha-mousse) !important;
     }
 
-    /* Hero */
     .hero {
         grid-template-columns: 1fr;
         text-align: center;
@@ -826,7 +824,6 @@ footer {
         object-fit: cover;
     }
 
-    /* Services */
     .services-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -842,7 +839,6 @@ footer {
         margin: 0 auto 1.25rem;
     }
 
-    /* Projets */
     .projets-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -857,11 +853,6 @@ footer {
         padding: 1.2rem;
     }
 
-    .projet-info h3 {
-        font-size: 1.1rem;
-    }
-
-    /* Témoignages */
     .temoignages-grid {
         grid-template-columns: 1fr;
         padding: 0 0.5rem;
@@ -871,7 +862,6 @@ footer {
         padding: 1.5rem;
     }
 
-    /* Formulaire */
     .form-row {
         grid-template-columns: 1fr;
         gap: 0;
@@ -893,7 +883,6 @@ footer {
         font-size: 3rem;
     }
 
-    /* Footer */
     .footer-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -905,8 +894,10 @@ footer {
         justify-content: center;
     }
 
-    /* Correction padding sections */
-    .services, .projets, .temoignages, .contact {
+    .services,
+    .projets,
+    .temoignages,
+    .contact {
         padding: 2.5rem 0.5rem;
     }
 
@@ -964,7 +955,141 @@ footer {
         padding: 2rem 0.5rem;
     }
 
-    .services, .projets, .temoignages, .contact {
+    .services,
+    .projets,
+    .temoignages,
+    .contact {
         padding: 2rem 0.5rem;
+    }
+
+    .message-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .message-date {
+        margin-left: 0;
+    }
+
+    .delete-btn {
+        margin-left: auto;
+        margin-top: -1.5rem;
+    }
+}
+
+/* ========================================
+   PROJECT 4 - STYLES DES MESSAGES
+   ======================================== */
+.messages-section {
+    padding: var(--section-padding);
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.messages-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.message-card {
+    background: var(--moonlit-grey);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--mocha-mousse);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.message-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.message-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.message-header strong {
+    font-family: var(--font-heading);
+    color: var(--text-dark);
+    font-size: 1.05rem;
+}
+
+.message-email {
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+.message-date {
+    color: var(--text-light);
+    font-size: 0.75rem;
+    margin-left: auto;
+}
+
+.message-body p {
+    color: var(--text-dark);
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+}
+
+.message-sujet {
+    display: inline-block;
+    background: var(--ethereal-blue);
+    padding: 0.15rem 0.8rem;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    color: var(--text-dark);
+    margin-top: 0.5rem;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #c0392b;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-left: auto;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+    color: white;
+    transform: scale(1.1);
+}
+
+.empty-messages {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.empty-messages p {
+    margin: 0.25rem 0;
+}
+
+/* Responsive des messages en mobile */
+@media (max-width: 768px) {
+    .message-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .message-date {
+        margin-left: 0;
+    }
+    .delete-btn {
+        margin-left: auto;
+        margin-top: -1.5rem;
     }
 }
