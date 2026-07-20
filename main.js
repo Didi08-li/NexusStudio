@@ -116,7 +116,7 @@ document.querySelectorAll('.service-card, .projet-card, .temoignage').forEach(el
 // Configuration de l'API
 // ⚠️ Pour le développement local, utilisez localhost
 // Pour la production, remplacez par l'URL de votre API en ligne
-const API_URL = 'http://localhost:3000/api/messages';
+const API_URL = 'https://nexusstudio-wo7o.onrender.com/api/messages';
 
 // ========================================
 // FONCTIONS API
