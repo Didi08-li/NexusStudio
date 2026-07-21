@@ -114,8 +114,6 @@ document.querySelectorAll('.service-card, .projet-card, .temoignage').forEach(el
 // ========================================
 
 // Configuration de l'API
-// ⚠️ Pour le développement local, utilisez localhost
-// Pour la production, remplacez par l'URL de votre API en ligne
 const API_URL = 'https://nexusstudio-wo7o.onrender.com/api/messages';
 
 // ========================================
@@ -186,7 +184,7 @@ async function deleteMessage(id) {
 }
 
 // ========================================
-// AFFICHAGE DES MESSAGES DANS LE DOM
+// AFFICHAGE DES MESSAGES
 // ========================================
 
 function displayMessages(messagesData) {
@@ -199,7 +197,7 @@ function displayMessages(messagesData) {
         messageContainer.innerHTML = `
             <div class="section-header">
                 <span class="badge">Messages reçus</span>
-                <h2>Ils nous ont contactés</h2>
+                <h2>💌 Ils nous ont contactés</h2>
                 <p>Découvrez les derniers messages envoyés via le formulaire.</p>
             </div>
             <div id="messagesList" class="messages-list"></div>
@@ -218,28 +216,39 @@ function displayMessages(messagesData) {
     if (!messagesData || !messagesData.data || messagesData.data.length === 0) {
         messagesList.innerHTML = `
             <div class="empty-messages">
-                <p>Aucun message pour le moment.</p>
-                <p style="font-size: 0.9rem; color: var(--text-light);">
-                    Les messages du formulaire apparaîtront ici.
+                <div class="empty-icon">📭</div>
+                <h3>Aucun message pour le moment</h3>
+                <p>Les messages envoyés via le formulaire apparaîtront ici.</p>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;">
+                    Soyez le premier à nous contacter !
                 </p>
             </div>
         `;
         return;
     }
     
-    messagesList.innerHTML = messagesData.data.map(msg => `
-        <div class="message-card" data-id="${msg.id}">
-            <div class="message-header">
-                <strong>${escapeHtml(msg.nom)}</strong>
-                <span class="message-email">${escapeHtml(msg.email)}</span>
-                <span class="message-date">${formatDate(msg.date_creation)}</span>
-                <button class="delete-btn" onclick="handleDeleteMessage(${msg.id})" aria-label="Supprimer le message">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+    messagesList.innerHTML = messagesData.data.map((msg, index) => `
+        <div class="message-card" data-id="${msg.id}" style="animation-delay: ${index * 0.1}s">
+            <div class="message-card-header">
+                <div class="message-user">
+                    <div class="message-avatar">
+                        ${getInitials(msg.nom)}
+                    </div>
+                    <div>
+                        <strong>${escapeHtml(msg.nom)}</strong>
+                        <span class="message-email">${escapeHtml(msg.email)}</span>
+                    </div>
+                </div>
+                <div class="message-actions">
+                    <span class="message-date">${formatDate(msg.date_creation)}</span>
+                    <button class="delete-btn" onclick="handleDeleteMessage(${msg.id})" aria-label="Supprimer le message" title="Supprimer">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
             </div>
-            <div class="message-body">
+            <div class="message-card-body">
                 <p>${escapeHtml(msg.message)}</p>
-                ${msg.sujet && msg.sujet !== 'Non spécifié' ? `<span class="message-sujet">📌 ${escapeHtml(msg.sujet)}</span>` : ''}
+                ${msg.sujet && msg.sujet !== 'Non spécifié' ? `<div class="message-sujet">📌 ${escapeHtml(msg.sujet)}</div>` : ''}
             </div>
         </div>
     `).join('');
@@ -248,6 +257,13 @@ function displayMessages(messagesData) {
 // ========================================
 // UTILITAIRES
 // ========================================
+
+function getInitials(nom) {
+    if (!nom) return '?';
+    const parts = nom.trim().split(' ');
+    if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+}
 
 function escapeHtml(text) {
     if (!text) return '';
@@ -269,7 +285,7 @@ function formatDate(dateString) {
 }
 
 // ========================================
-// GESTION DES MESSAGES (CRUD)
+// GESTION DES MESSAGES
 // ========================================
 
 async function handleDeleteMessage(id) {
@@ -287,7 +303,7 @@ async function handleDeleteMessage(id) {
 }
 
 // ========================================
-// CONTACT FORM - AVEC API BACKEND
+// CONTACT FORM - AVEC API
 // ========================================
 
 const contactForm = document.getElementById('contactForm');
@@ -408,127 +424,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-// ========================================
-// STYLES DYNAMIQUES POUR LES MESSAGES
-// ========================================
-
-const styleSheet = document.createElement('style');
-styleSheet.textContent = `
-    .messages-section {
-        padding: 4rem 1.5rem;
-        background: var(--bg-white, #FFFFFF);
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-    
-    .messages-list {
-        max-width: 800px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .message-card {
-        background: var(--moonlit-grey, #F2F0EA);
-        padding: 1.5rem;
-        border-radius: var(--radius, 12px);
-        border-left: 4px solid var(--mocha-mousse, #A67B5B);
-        transition: all 0.3s ease;
-    }
-    
-    .message-card:hover {
-        transform: translateX(4px);
-        box-shadow: var(--shadow, 0 8px 24px rgba(62, 45, 30, 0.08));
-    }
-    
-    .message-header {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .message-header strong {
-        font-family: var(--font-heading, 'Inter', sans-serif);
-        color: var(--text-dark, #3D2E1E);
-        font-size: 1.05rem;
-    }
-    
-    .message-email {
-        color: var(--text-light, #7A6B5A);
-        font-size: 0.85rem;
-    }
-    
-    .message-date {
-        color: var(--text-light, #7A6B5A);
-        font-size: 0.75rem;
-        margin-left: auto;
-    }
-    
-    .message-body p {
-        color: var(--text-dark, #3D2E1E);
-        font-weight: 400;
-        margin-bottom: 0.25rem;
-    }
-    
-    .message-sujet {
-        display: inline-block;
-        background: var(--ethereal-blue, #A0D4E0);
-        padding: 0.15rem 0.8rem;
-        border-radius: 40px;
-        font-size: 0.75rem;
-        color: var(--text-dark, #3D2E1E);
-        margin-top: 0.5rem;
-    }
-    
-    .delete-btn {
-        background: none;
-        border: none;
-        color: #c0392b;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        margin-left: auto;
-    }
-    
-    .delete-btn:hover {
-        background: #c0392b;
-        color: white;
-        transform: scale(1.1);
-    }
-    
-    .empty-messages {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: var(--text-light, #7A6B5A);
-    }
-    
-    .empty-messages p {
-        margin: 0.25rem 0;
-    }
-    
-    @media (max-width: 768px) {
-        .message-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .message-date {
-            margin-left: 0;
-        }
-        .delete-btn {
-            margin-left: auto;
-            margin-top: -1.5rem;
-        }
-    }
-`;
-document.head.appendChild(styleSheet);
-
 console.log('🚀 Project 4 - Frontend connecté à l\'API !');
 console.log(`📡 API URL: ${API_URL}`);
 console.log('🌿 Nexus Studio - Bienvenue !');
-console.log('📱 Projet réalisé dans le cadre du Full Stack Project - DecodeLabs 2026');
