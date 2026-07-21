@@ -6,7 +6,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-const cors = require('cors');
 
 const corsOptions = {
     origin: '*',  // Autorise toutes les origines (pour le test)
