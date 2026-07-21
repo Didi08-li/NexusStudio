@@ -6,7 +6,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+const cors = require('cors');
+
+const corsOptions = {
+    origin: '*',  // Autorise toutes les origines (pour le test)
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // ========================================
