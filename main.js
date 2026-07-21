@@ -130,10 +130,10 @@ async function loadMessages() {
         }
         
         const data = await response.json();
-        console.log('📩 Messages récupérés:', data);
+        console.log(' Messages récupérés:', data);
         return data;
     } catch (error) {
-        console.error('❌ Erreur chargement messages:', error);
+        console.error(' Erreur chargement messages:', error);
         return null;
     }
 }
@@ -197,7 +197,7 @@ function displayMessages(messagesData) {
         messageContainer.innerHTML = `
             <div class="section-header">
                 <span class="badge">Messages reçus</span>
-                <h2>💌 Ils nous ont contactés</h2>
+                <h2> Ils nous ont contactés</h2>
                 <p>Découvrez les derniers messages envoyés via le formulaire.</p>
             </div>
             <div id="messagesList" class="messages-list"></div>
